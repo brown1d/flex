@@ -6,6 +6,13 @@
  */
 
 
+#include <cstdint>
+#include <string>
+#include <iostream>
+#include <stdexcept>
+
+using namespace std;
+
 enum MessageType {
   AlphaNum
 };
