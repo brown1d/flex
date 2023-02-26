@@ -102,57 +102,85 @@ int main() {
   testCodeword = 0x87523;
   result = applyBchChecksum(testCodeword);
   if (result == 0x38C87523) {
-    cout << "Test 8: Passed, excepted CRC matches" << endl;
+    cout << "Test 9: Passed, excepted CRC matches" << endl;
   } else {
-    cerr << "Test 8: Failed, excepted CRC does not match " << result <<	endl;
+    cerr << "Test 9: Failed, excepted CRC does not match " << result <<	endl;
   }
 
-  // Test 10: Test Frame info word
+  // Test 10: 4 bit checksum all zeros
+  testCodeword = 0x0;
+  result = apply4bitChecksum(testCodeword);
+  if (result == 0x0000000F) {
+    cout << "Test 10: Passed, excepted 4bit checksum matches" << endl;
+  } else {
+    cerr << "Test 10: Failed, excepted 4bit checksum does not match " << result <<	endl;
+  }
+
+  // Test 11: 4 bit checksum all zeros
+  testCodeword = 0x001FFFF0;
+  result = apply4bitChecksum(testCodeword);
+  if (result == 0x001FFFF2) {
+    cout << "Test 11: Passed, excepted 4bit checksum matches" << endl;
+  } else {
+    cerr << "Test 11: Failed, excepted 4bit checksum does not match " << result <<	endl;
+  }
+
+    // Test 12: 4 bit checksum all zeros
+  testCodeword = 0x00139C50;
+  result = apply4bitChecksum(testCodeword);
+  if (result == 0x00139C51) {
+    cout << "Test 12: Passed, excepted 4bit checksum matches" << endl;
+  } else {
+    cerr << "Test 12: Failed, excepted 4bit checksum does not match " << result <<	endl;
+  }
+
+  
+  // Test 13: Test Frame info word
   try {
     FrameInformationWord fiw(3, 60, 0, 8);
     uint32_t codeWord = fiw.getCodeword() & 0x1ffff0;
     if (codeWord != 0x103c30) {
-      cerr << "Test 10: Invalid Codeworrd from FIW" << codeWord << endl;
+      cerr << "Test 13: Invalid Codeworrd from FIW" << codeWord << endl;
     } else {
-      cout << "Test 10 passed" << endl;
+      cout << "Test 13 passed" << endl;
     }
   } catch (std::invalid_argument& e) {
     cerr << e.what() << endl;
     return -1;
   }
 
-  // Test 11: Test Frame info word, out of range cycle
+  // Test 14: Test Frame info word, out of range cycle
   try {
     FrameInformationWord fiw(15, 60, 0, 8);
-    cerr << "Test 11 should throw exception" << endl;
+    cerr << "Test 14 should throw exception" << endl;
   } catch (std::invalid_argument& e) {
-    cout << "Test 11 passed " << e.what() << endl;
+    cout << "Test 14 passed " << e.what() << endl;
   }
 
-  // Test 12: Test Frame info word, out of range frame
+  // Test 15: Test Frame info word, out of range frame
   try {
     FrameInformationWord fiw(14, 128, 0, 8);
-    cerr << "Test 12 should throw exception" << endl;
+    cerr << "Test 15 should throw exception" << endl;
   } catch (std::invalid_argument& e) {
-    cout << "Test 12 passed " << e.what() << endl;
+    cout << "Test 15 passed " << e.what() << endl;
   }
 
-  // Test 13: Test Frame info word, out of range repeat
+  // Test 16: Test Frame info word, out of range repeat
   try {
     FrameInformationWord fiw(14, 60, 2, 8);
-    cerr << "Test 13 should throw exception" << endl;
+    cerr << "Test 16 should throw exception" << endl;
   } catch (std::invalid_argument& e) {
-    cout << "Test 13 passed " << e.what() << endl;
+    cout << "Test 16 passed " << e.what() << endl;
   }
   
-  // Test 14: Test Frame info word CRC
+  // Test 17: Test Frame info word CRC
   try {
     FrameInformationWord fiw(3, 107, 0, 0);
     uint32_t codeWord = fiw.getCodeword();
     if (codeWord != 0xe4a06b3b) {
-      cerr << "Test 14: Invalid CRC " << codeWord << endl;
+      cerr << "Test 17: Invalid CRC " << codeWord << endl;
     } else {
-      cout << "Test 14 passed" << endl;
+      cout << "Test 17 passed" << endl;
     }
   } catch (std::invalid_argument& e) {
     cerr << e.what() << endl;
