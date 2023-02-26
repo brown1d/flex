@@ -22,5 +22,8 @@ enum CapcodeType {
   Invalid
 };
 
-
-
+// Helper functions
+uint32_t apply4bitChecksum(uint32_t codeword);
+uint32_t applyBchChecksum(uint32_t codeword);
+uint32_t applyBchAndParity(uint32_t codeword);
+bool checkAndSetParity(uint32_t *codeword);

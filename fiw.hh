@@ -19,7 +19,7 @@ private:
 public: 
   FrameInformationWord(uint32_t cycleNumber, uint32_t frameNumber, uint32_t repeatPaging, uint32_t lowTrafficFlags); 
   uint32_t getCodeword();
-}
+};
 
 #endif
   

@@ -1,15 +1,20 @@
 /**
  * Author: David Brown <dave@bagpuss.nu>
- * File:   fiw.cpp
+ * File:   helper.cpp
  *
  * Helper routines
  */
 
-#include "flex.h"
+#include "flex.hh"
 #include <iostream>
 #include <stdexcept>
 
 using namespace std;
+
+// Declare private functions 
+uint32_t countOnes(uint32_t codeword);
+void setParity(uint32_t *codeword);
+void clearParity(uint32_t *codeword);
 
 uint32_t apply4bitChecksum(uint32_t codeword) {
   uint32_t sum = 0x0;
@@ -42,8 +47,8 @@ uint32_t applyBchAndParity(uint32_t codeword) {
   return cw;
 }
 
-boolean checkAndSetParity(uint32_t *codeword) {
-  uint32_t ones = countOnes(codeword);
+bool checkAndSetParity(uint32_t *codeword) {
+  uint32_t ones = countOnes(*codeword);
 
   if ((ones % 2) != 0) {
     setParity(codeword);
@@ -56,19 +61,19 @@ boolean checkAndSetParity(uint32_t *codeword) {
 
 uint32_t countOnes(uint32_t codeword) {
   uint32_t ones = 0;
-  for (i=0 i <= 31; i++) {
-    uinit32_t mask = 1 << i;
+  for (int i=0; i <= 31; i++) {
+    uint32_t mask = 1 << i;
     ones += (codeword & mask) >> i;
   }
   return ones;
 }
 
-void setParity(uint_32t *codeword) {
+void setParity(uint32_t *codeword) {
   uint32_t parity_bit = 0x80000000;
   *codeword = *codeword | parity_bit;
 }
 
-void clearParity(uint32_t codeword) {
+void clearParity(uint32_t *codeword) {
   *codeword = *codeword & 0x7FFFFFFF;
 }
 

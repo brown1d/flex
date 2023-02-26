@@ -7,8 +7,6 @@
 
 #include "flex.hh"
 #include "fiw.hh"
-#include <iostream>
-#include <stdexcept>
 
 using namespace std;
 FrameInformationWord::FrameInformationWord(uint32_t cycleNumber, uint32_t frameNumber, uint32_t repeatPaging, uint32_t lowTrafficFlags) {
@@ -27,12 +25,12 @@ uint32_t FrameInformationWord::getCodeword() {
   cw |= this->cycleNumber << 4;
   cw |= this->frameNumber << 8;
   cw |= this->repeatPaging << 16;
-    cw |= this->lowTrafficFlags << 17;
+  cw |= this->lowTrafficFlags << 17;
+  
+  cw = apply4bitChecksum(cw);
+  cw = applyBchAndParity(cw);
     
-    cw = apply4bitChecksum(cw);
-    cw = applyBchAndParity(cw);
-    
-    return cw;
+  return cw;
 }
   
   

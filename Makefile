@@ -5,13 +5,16 @@ CPPFLAGS=-g
 LDFLAGS=-g
 LDLIBS=
 
-SRCS=main.cpp message.cpp
+SRCS=fiw.cpp helper.cpp main.cpp message.cpp test.cpp
 OBJS=$(subst .cpp,.o,$(SRCS))
 
-all: flex
+all: test
 
 flex: $(OBJS)
 	$(CXX) $(LDFLAGS) -o flex $(OBJS) $(LDLIBS)
+
+test: $(OBJS)
+	$(CXX) $(LDFLAGS) -o test test.o message.o fiw.o helper.o
 
 clean:
 	$(RM) $(OBJS)

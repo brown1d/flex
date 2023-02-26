@@ -7,6 +7,7 @@
 
 #include "flex.hh"
 #include "message.hh"
+#include "fiw.hh"
 
 #include <iostream>
 #include <stdexcept>
@@ -17,7 +18,7 @@ int main() {
   // Test1: Test Message
   try {
     Message message(0, MessageType::AlphaNum, 0x0001, "test");
-    cerr << "Test 1 Passed"<< endl;
+    cout << "Test 1 Passed"<< endl;
   } catch (std::invalid_argument& e) {
     cerr << "Test1: " << e.what() << endl;
   }
@@ -27,7 +28,7 @@ int main() {
     Message message(0, MessageType::AlphaNum, 0x0000, "test");
     cerr << "Test2: This should be invalid and throw an exception, test failed" << endl;
   } catch (std::invalid_argument& e) {
-    cerr << "Test 2 Passed"<< endl;
+    cout << "Test 2 Passed"<< endl;
   }
   
   // Test3: Test message get number of content codewords when five characters
@@ -36,7 +37,7 @@ int main() {
     if (message.getNumberOfContentCodewords() != 3) {
       cerr << "Test3: Invalid number of Codewords " << message.getNumberOfContentCodewords() << endl;
     } else {
-      cerr << "Test 3 Passed"<< endl;
+      cout << "Test 3 Passed"<< endl;
     }
   }  catch (std::invalid_argument& e) {
     cerr << e.what() << endl;
@@ -49,7 +50,7 @@ int main() {
     if (message.getNumberOfMessageCodewords() != 4) {
       cerr << "Test4: Invalid number of Codewords " << message.getNumberOfContentCodewords() << endl;
     } else {
-      cerr << "Test 4 Passed"<< endl;
+      cout << "Test 4 Passed"<< endl;
     }
   }  catch (std::invalid_argument& e) {
     cerr << e.what() << endl;
@@ -62,11 +63,24 @@ int main() {
     if (message.getNumberOfMessageCodewords() != 5) {
       cerr << "Test5: Invalid number of Codewords " << message.getNumberOfContentCodewords() << endl;
     } else {
-      cerr << "Test 5 Passed"<< endl;
+      cout << "Test 5 Passed"<< endl;
     }
   }  catch (std::invalid_argument& e) {
     cerr << e.what() << endl;
     return -1;
   }
 
+  // Test 6: Test Frame info word
+  try {
+    FrameInformationWord fiw(3, 60, 0, 8);
+    uint32_t codeWord = fiw.getCodeword() & 0x1ffff0;
+    if (codeWord != 0x103c30) {
+      cerr << "Test 6: Invalid Codeworrd from FIW" << codeWord << endl;
+    } else {
+      cout << "Test 6 passed" << endl;
+    }
+  } catch (std::invalid_argument& e) {
+    cerr << e.what() << endl;
+    return -1;
+  }
 }
