@@ -207,52 +207,52 @@ int main() {
   }
 
   //--------------- Frame Information Word
-  // Test 13: Test Frame info word
+  // Test 18: Test Frame info word
   try {
     FrameInformationWord fiw(3, 60, 0, 8);
     uint32_t codeWord = fiw.getCodeword() & 0x1ffff0;
     if (codeWord != 0x103c30) {
-      cerr << "Test 13: Invalid Codeworrd from FIW" << codeWord << endl;
+      cerr << "Test 18: Invalid Codeworrd from FIW" << codeWord << endl;
     } else {
-      cout << "Test 13 passed" << endl;
+      cout << "Test 18 passed" << endl;
     }
   } catch (std::invalid_argument& e) {
     cerr << e.what() << endl;
     return -1;
   }
 
-  // Test 14: Test Frame info word, out of range cycle
+  // Test 19: Test Frame info word, out of range cycle
   try {
     FrameInformationWord fiw(15, 60, 0, 8);
-    cerr << "Test 14 should throw exception" << endl;
+    cerr << "Test 19 should throw exception" << endl;
   } catch (std::invalid_argument& e) {
-    cout << "Test 14 passed " << e.what() << endl;
+    cout << "Test 19 passed " << e.what() << endl;
   }
 
-  // Test 15: Test Frame info word, out of range frame
+  // Test 20: Test Frame info word, out of range frame
   try {
     FrameInformationWord fiw(14, 128, 0, 8);
-    cerr << "Test 15 should throw exception" << endl;
+    cerr << "Test 20 should throw exception" << endl;
   } catch (std::invalid_argument& e) {
-    cout << "Test 15 passed " << e.what() << endl;
+    cout << "Test 20 passed " << e.what() << endl;
   }
 
-  // Test 16: Test Frame info word, out of range repeat
+  // Test 21: Test Frame info word, out of range repeat
   try {
     FrameInformationWord fiw(14, 60, 2, 8);
-    cerr << "Test 16 should throw exception" << endl;
+    cerr << "Test 21 should throw exception" << endl;
   } catch (std::invalid_argument& e) {
-    cout << "Test 16 passed " << e.what() << endl;
+    cout << "Test 21 passed " << e.what() << endl;
   }
   
-  // Test 17: Test Frame info word CRC
+  // Test 22: Test Frame info word CRC
   try {
     FrameInformationWord fiw(3, 107, 0, 0);
     uint32_t codeWord = fiw.getCodeword();
     if (codeWord != 0xe4a06b3b) {
-      cerr << "Test 17: Invalid CRC " << codeWord << endl;
+      cerr << "Test 22: Invalid CRC " << codeWord << endl;
     } else {
-      cout << "Test 17 passed" << endl;
+      cout << "Test 22 passed" << endl;
     }
   } catch (std::invalid_argument& e) {
     cerr << e.what() << endl;
