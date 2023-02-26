@@ -83,4 +83,43 @@ int main() {
     cerr << e.what() << endl;
     return -1;
   }
+
+  // Test 7: Test Frame info word, out of range cycle
+  try {
+    FrameInformationWord fiw(15, 60, 0, 8);
+    cerr << "Test 7 should throw exception" << endl;
+  } catch (std::invalid_argument& e) {
+    cout << "Test 7 passed " << e.what() << endl;
+  }
+
+  // Test 8: Test Frame info word, out of range frame
+  try {
+    FrameInformationWord fiw(14, 128, 0, 8);
+    cerr << "Test 8 should throw exception" << endl;
+  } catch (std::invalid_argument& e) {
+    cout << "Test 8 passed " << e.what() << endl;
+  }
+
+  // Test 9: Test Frame info word, out of range repeat
+  try {
+    FrameInformationWord fiw(14, 60, 2, 8);
+    cerr << "Test 9 should throw exception" << endl;
+  } catch (std::invalid_argument& e) {
+    cout << "Test 9 passed " << e.what() << endl;
+  }
+  
+  // Test 10: Test Frame info word CRC
+  try {
+    FrameInformationWord fiw(3, 107, 0, 0);
+    uint32_t codeWord = fiw.getCodeword();
+    if (codeWord != 0xe4a06b3b) {
+      cerr << "Test 10: Invalid CRC " << codeWord << endl;
+    } else {
+      cout << "Test 10 passed" << endl;
+    }
+  } catch (std::invalid_argument& e) {
+    cerr << e.what() << endl;
+    return -1;
+  }
+
 }
