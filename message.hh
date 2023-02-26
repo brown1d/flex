@@ -1,3 +1,10 @@
+/**
+ * Author: David Brown <dave@bagpuss.nu>
+ * File:   message.hh
+ *
+ * Message class
+ */
+
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
@@ -10,6 +17,7 @@ private:
 
 public:
   Message(uint32_t frame, MessageType messageType, uint32_t capcode, string data);
+  uint32_t getNumberOfMessageCodewords();
   uint32_t getNumberOfContentCodewords();
       
 private:

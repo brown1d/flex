@@ -23,8 +23,29 @@ Message::Message(uint32_t frame, MessageType messageType, uint32_t capcode, stri
     this->data = data;
 }
 
+uint32_t Message::getNumberOfMessageCodewords() {
+  uint32_t size = 0;
+
+  switch (getCapcodeType(this->capcode)) {
+  case CapcodeType::ShortAddress:
+    size += 2;
+    break;
+  case CapcodeType:: Invalid:
+    throw std::invalid_argument("Invalid Capcode");
+    break;
+  }
+
+  switch (this->messageType) {
+  case MessageType::AlphaNum:
+    size += getNumberOfContentCodewords();
+    break;
+  }
+  
+  return size;
+}
+
 uint32_t Message::getNumberOfContentCodewords() {
-    uint32_t size;
+    uint32_t size = 0;
     size += 2;
     size += (this->data.size()-2)/3;
     if (((this->data.size()-2) % 3) > 0) {
