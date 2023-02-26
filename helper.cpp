@@ -32,7 +32,7 @@ uint32_t apply4bitChecksum(uint32_t codeword) {
 
 uint32_t applyBchChecksum(uint32_t codeword) {
   uint32_t crc = codeword;
-  for (int i = 0; i <= 21; i++) {
+  for (int i = 0; i < 21; i++) {
     if ((crc & (0x00000001 << i)) != 0) {
 	  crc ^= 0x4b7 << i;
     }
@@ -61,7 +61,7 @@ bool checkAndSetParity(uint32_t *codeword) {
 
 uint32_t countOnes(uint32_t codeword) {
   uint32_t ones = 0;
-  for (int i=0; i <= 31; i++) {
+  for (int i=0; i < 31; i++) {
     uint32_t mask = 1 << i;
     ones += (codeword & mask) >> i;
   }
