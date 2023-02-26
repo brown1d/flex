@@ -17,15 +17,17 @@ int main() {
   // Test1: Test Message
   try {
     Message message(0, MessageType::AlphaNum, 0x0001, "test");
+    cerr << "Test 1 Passed"<< endl;
   } catch (std::invalid_argument& e) {
     cerr << "Test1: " << e.what() << endl;
   }
-
+  
   // Test2: This test should throw an exception
   try {
     Message message(0, MessageType::AlphaNum, 0x0000, "test");
-    cerr << "Test2: This should be invalid and throw an exception, test failed" << e.what() << endl;
+    cerr << "Test2: This should be invalid and throw an exception, test failed" << endl;
   } catch (std::invalid_argument& e) {
+    cerr << "Test 2 Passed"<< endl;
   }
   
   // Test3: Test message get number of content codewords when five characters
@@ -33,6 +35,8 @@ int main() {
     Message message(0, MessageType::AlphaNum, 0x8001, "abcde");
     if (message.getNumberOfContentCodewords() != 3) {
       cerr << "Test3: Invalid number of Codewords " << message.getNumberOfContentCodewords() << endl;
+    } else {
+      cerr << "Test 3 Passed"<< endl;
     }
   }  catch (std::invalid_argument& e) {
     cerr << e.what() << endl;
@@ -44,6 +48,8 @@ int main() {
     Message message(0, MessageType::AlphaNum, 0x8001, "ab");
     if (message.getNumberOfMessageCodewords() != 4) {
       cerr << "Test4: Invalid number of Codewords " << message.getNumberOfContentCodewords() << endl;
+    } else {
+      cerr << "Test 4 Passed"<< endl;
     }
   }  catch (std::invalid_argument& e) {
     cerr << e.what() << endl;
@@ -55,6 +61,8 @@ int main() {
     Message message(0, MessageType::AlphaNum, 0x8001, "abcd");
     if (message.getNumberOfMessageCodewords() != 5) {
       cerr << "Test5: Invalid number of Codewords " << message.getNumberOfContentCodewords() << endl;
+    } else {
+      cerr << "Test 5 Passed"<< endl;
     }
   }  catch (std::invalid_argument& e) {
     cerr << e.what() << endl;
