@@ -24,8 +24,8 @@ int main() {
   // Test2: This test should throw an exception
   try {
     Message message(0, MessageType::AlphaNum, 0x0000, "test");
+    cerr << "Test2: This should be invalid and throw an exception, test failed" << e.what() << endl;
   } catch (std::invalid_argument& e) {
-    cerr << "Test2: This should be invalid " << e.what() << endl;
   }
   
   // Test3: Test message get number of content codewords when five characters
