@@ -69,7 +69,7 @@ int main() {
     cerr << e.what() << endl;
     return -1;
   }
-
+   //--------------- Bch Checksum
   // Test 6: Test CRC all zeros
   uint32_t testCodeword = 0;
   uint32_t result = applyBchChecksum(testCodeword);
@@ -107,6 +107,7 @@ int main() {
     cerr << "Test 9: Failed, excepted CRC does not match " << result <<	endl;
   }
 
+  //--------------- 4bit Checksum
   // Test 10: 4 bit checksum all zeros
   testCodeword = 0x0;
   result = apply4bitChecksum(testCodeword);
@@ -134,7 +135,78 @@ int main() {
     cerr << "Test 12: Failed, excepted 4bit checksum does not match " << result <<	endl;
   }
 
+  //--------------- Parity
+  // Test 13: Test Parity all zeros
+  uint32_t testData = 0x0;
+  bool resultBool = checkAndSetParity(&testData);
+  if (resultBool == false) {
+    cout << "Test 13: Passed, Parity is false" << endl;
+  } else {
+    cerr << "Test 13: Failed, partiy is true " << result <<	endl;
+  }
+  if (testData == 0xFFFFFFFF) {
+    cout << "Test 13: Passed, test data is " << testData << endl;
+  } else {
+    cerr << "Test 13: Failed, test data is " << testData << endl;
+  }
+
+  // Test 14: Test Parity all ones
+  testData = 0x7FFFFFFF;
+  resultBool = checkAndSetParity(&testData);
+  if (resultBool == true) {
+    cout << "Test 14: Passed, Parity is true" << endl;
+  } else {
+    cerr << "Test 14: Failed, partiy is false " << result <<	endl;
+  }
+  if (testData == 0xFFFFFFFF) {
+    cout << "Test 14: Passed, test data is " << testData << endl;
+  } else {
+    cerr << "Test 14: Failed, test data is " << testData << endl;
+  }
+
+  // Test 15: Test Parity Even
+  testData = 0x3;
+  resultBool = checkAndSetParity(&testData);
+  if (resultBool == false) {
+    cout << "Test 15: Passed, Parity is false" << endl;
+  } else {
+    cerr << "Test 15: Failed, partiy is true " << result <<	endl;
+  }
+  if (testData == testData) {
+    cout << "Test 15: Passed, test data is " << testData << endl;
+  } else {
+    cerr << "Test 15: Failed, test data is " << testData << endl;
+  }
   
+  // Test 16: Test Illegal Parity Even
+  testData = 0x80000003;
+  resultBool = checkAndSetParity(&testData);
+  if (resultBool == false) {
+    cout << "Test 16: Passed, Parity is false" << endl;
+  } else {
+    cerr << "Test 16: Failed, partiy is true " << result <<	endl;
+  }
+  if (testData == 0x00000003) {
+    cout << "Test 16: Passed, test data is " << testData << endl;
+  } else {
+    cerr << "Test 16: Failed, test data is " << testData << endl;
+  }
+
+  // Test 17: Test Illegal Parity odd
+  testData = 0x80000001;
+  resultBool = checkAndSetParity(&testData);
+  if (resultBool == true) {
+    cout << "Test 17: Passed, Parity is true" << endl;
+  } else {
+    cerr << "Test 17: Failed, partiy is false " << result <<	endl;
+  }
+  if (testData == 0x80000001) {
+    cout << "Test 17: Passed, test data is " << testData << endl;
+  } else {
+    cerr << "Test 17: Failed, test data is " << testData << endl;
+  }
+
+  //--------------- Frame Information Word
   // Test 13: Test Frame info word
   try {
     FrameInformationWord fiw(3, 60, 0, 8);
