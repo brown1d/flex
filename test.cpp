@@ -429,4 +429,44 @@ int main() {
     cout << "Test 43: Test passed" << endl;
   }
 
+  // Test 44: Message Alpha Signature
+  MessageAlphaSignature mas1(0x7f, "B\x23");
+  if ((mas1.getCodeword() & 0x01fffff) != 0x8E17F) {
+    cerr << "Test 44: Message Alpha Signature Invalid Codeword" << endl;
+  } else {
+    cout << "Test 44: Test passed" << endl;
+  }
+
+  // Test 45: Message Alpha Signature - Invalid Signature
+  try {
+    MessageAlphaSignature mas2(0x800, "B\x23");
+    cerr << "Test 45: Invalid parameter exception should be thrownMessage Alpha Signature Invalid Codeword" << endl;
+  } catch(std::invalid_argument& e) {
+    cout << "Test 45: Test passed" << endl;
+  }
+
+  // Test 45: Message Alpha Signature - too few chars
+  try {
+    MessageAlphaSignature mas2(0x7ff, "B\x23");
+    cerr << "Test 45: Invalid parameter exception should be thrownMessage Alpha Signature Invalid Codeword" << endl;
+  } catch(std::invalid_argument& e) {
+    cout << "Test 45: Test passed" << endl;
+  }
+
+  // Test 46: Message Alpha Signature - Too few chars
+  try {
+    MessageAlphaSignature mas2(0x7ff, "B");
+    cerr << "Test 46: Invalid Signature Length exception should be thrown" << endl;
+  } catch (std::invalid_argument& e) {
+    cout << "Test 46: Passed" << endl;
+  }
+
+  // Test 47: Message Alpha Signature - Too many chars
+  try {
+    MessageAlphaSignature mas2(0x7ff, "B\x23\x5");
+    cerr << "Test 47: Invalid Signature Length exception should be thrown" << endl;
+  } catch (std::invalid_argument& e) {
+    cout << "Test 47: Passed" << endl;
+  }
+  
 }
