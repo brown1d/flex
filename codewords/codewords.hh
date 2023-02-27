@@ -89,4 +89,26 @@ public:
   uint32_t getCodeword();
 };
 
+class MessageAlphaContent {
+private:
+  string message;
+
+public:
+  MessageAlphaContent(string message);
+  uint32_t getCodeword();
+};
+
+class MessageAlphaHeader {
+private:
+  uint32_t messageContinuedFlag;
+  uint32_t fragmentNumber;
+  uint32_t messageNumber;
+  uint32_t retrievalFlag;
+  uint32_t mailDropFlag;
+
+public:
+  MessageAlphaHeader(uint32_t messageContinuedFlag, uint32_t fragmentNumber, uint32_t messageNumber, uint32_t retrievalFlag, uint32_t mailDropFlag);
+  uint32_t getCodeword();
+};
+
 #endif
