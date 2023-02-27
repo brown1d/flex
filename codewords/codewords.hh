@@ -5,9 +5,11 @@
  * Codeword implementation
  */
 
-
 #ifndef CODEWORDS_H
 #define CODEWORDS_H
+
+#include "../flex.hh"
+
 
 class BIW1 {
 private:
@@ -62,6 +64,19 @@ private:
   bool checkHour(uint32_t hour);
   bool checkMinute(uint32_t minute);
   bool checkSecond(uint32_t second);
+};
+
+
+class FrameInformationWord {
+private:
+  uint32_t cycleNumber;
+  uint32_t frameNumber;
+  uint32_t repeatPaging;
+  uint32_t lowTrafficFlags;
+  
+public: 
+  FrameInformationWord(uint32_t cycleNumber, uint32_t frameNumber, uint32_t repeatPaging, uint32_t lowTrafficFlags); 
+  uint32_t getCodeword();
 };
 
 #endif

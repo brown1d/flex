@@ -5,8 +5,7 @@
  * Frame Information Word class
  */
 
-#include "flex.hh"
-#include "fiw.hh"
+#include "codewords.hh"
 
 using namespace std;
 FrameInformationWord::FrameInformationWord(uint32_t cycleNumber, uint32_t frameNumber, uint32_t repeatPaging, uint32_t lowTrafficFlags) {
@@ -18,7 +17,7 @@ FrameInformationWord::FrameInformationWord(uint32_t cycleNumber, uint32_t frameN
   this->frameNumber = frameNumber;
   this->repeatPaging = repeatPaging;
   this->lowTrafficFlags = lowTrafficFlags;
-  }
+}
 
 uint32_t FrameInformationWord::getCodeword() {
   uint32_t cw = 0x0;

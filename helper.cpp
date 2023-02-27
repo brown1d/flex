@@ -69,8 +69,7 @@ uint32_t countOnes(uint32_t codeword) {
 }
 
 void setParity(uint32_t *codeword) {
-  uint32_t parity_bit = 0x80000000;
-  *codeword = *codeword | parity_bit;
+  *codeword = *codeword | 0x80000000;
 }
 
 void clearParity(uint32_t *codeword) {
