@@ -2,9 +2,11 @@
 
 Based on: https://github.com/dl1com/flex/
 
-This is a convert to C++.
+This is a convert to C++ from the original Rust source material.
 
-## Test Coded
+Motorola Flex is a one-way Pager protocol.
+
+## Passing Tests
 
 1. Helper
 2. Message
