@@ -10,13 +10,13 @@
 #ifndef FRAME_H
 #define FRAME_H
 
-const PATTERN_BCS1 0x55555555;
-const PATTERN_A1 = 0x9C9ACF1E;
-const PATTERN_B = 0xAAAA;
-const PATTERN_BS2 = 0x05;
-const PATTERN_C = 0x21B7;
+const uint32_t PATTERN_BCS1 = 0x55555555;
+const uint32_t PATTERN_A1 = 0x9C9ACF1E;
+const uint32_t PATTERN_B = 0xAAAA;
+const uint32_t PATTERN_BS2 = 0x05;
+const uint32_t PATTERN_C = 0x21B7;
 
-const MAX_CODEWORDS_PER_BLOCK_1600 = 88;
+const uint32_t MAX_CODEWORDS_PER_BLOCK_1600 = 88;
 
 class Frame {
 private:
