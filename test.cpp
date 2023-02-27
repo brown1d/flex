@@ -142,12 +142,12 @@ int main() {
   if (resultBool == false) {
     cout << "Test 13: Passed, Parity is false" << endl;
   } else {
-    cerr << "Test 13: Failed, partiy is true " << result <<	endl;
+    cerr << "Test 13: Failed, partiy is true " << result << endl;
   }
-  if (testData == 0xFFFFFFFF) {
-    cout << "Test 13: Passed, test data is " << testData << endl;
+  if (unsigned(testData) == testData) {
+    cout << "Test 13: Passed, test data is " << unsigned(testData) << endl;
   } else {
-    cerr << "Test 13: Failed, test data is " << testData << endl;
+    cerr << "Test 13: Failed, test data is " << unsigned(testData) << endl;
   }
 
   // Test 14: Test Parity all ones
@@ -156,7 +156,7 @@ int main() {
   if (resultBool == true) {
     cout << "Test 14: Passed, Parity is true" << endl;
   } else {
-    cerr << "Test 14: Failed, partiy is false " << result <<	endl;
+    cerr << "Test 14: Failed, partiy is false " << result << endl;
   }
   if (testData == 0xFFFFFFFF) {
     cout << "Test 14: Passed, test data is " << testData << endl;
@@ -170,7 +170,7 @@ int main() {
   if (resultBool == false) {
     cout << "Test 15: Passed, Parity is false" << endl;
   } else {
-    cerr << "Test 15: Failed, partiy is true " << result <<	endl;
+    cerr << "Test 15: Failed, partiy is true " << result << endl;
   }
   if (testData == testData) {
     cout << "Test 15: Passed, test data is " << testData << endl;
@@ -184,7 +184,7 @@ int main() {
   if (resultBool == false) {
     cout << "Test 16: Passed, Parity is false" << endl;
   } else {
-    cerr << "Test 16: Failed, partiy is true " << result <<	endl;
+    cerr << "Test 16: Failed, partiy is true " << result << endl;
   }
   if (testData == 0x00000003) {
     cout << "Test 16: Passed, test data is " << testData << endl;
@@ -198,7 +198,7 @@ int main() {
   if (resultBool == true) {
     cout << "Test 17: Passed, Parity is true" << endl;
   } else {
-    cerr << "Test 17: Failed, partiy is false " << result <<	endl;
+    cerr << "Test 17: Failed, partiy is false " << result << endl;
   }
   if (testData == 0x80000001) {
     cout << "Test 17: Passed, test data is " << testData << endl;
