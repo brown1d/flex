@@ -10,7 +10,17 @@
 
 #include "../flex.hh"
 
+const uint32_t SHORT_ADDRESS_CAPCODE_OFFSET = 0x8000;
 
+class AddressShort {
+private:
+  uint32_t capCode;
+
+public:
+  AddressShort(uint32_t capCode);
+  uint32_t getCodeword();
+};
+  
 class BIW1 {
 private:
   uint32_t priorityAddress;
