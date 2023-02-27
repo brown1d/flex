@@ -8,6 +8,7 @@
 #include "flex.hh"
 #include "message.hh"
 #include "fiw.hh"
+#include "codewords.hh"
 
 #include <iostream>
 #include <stdexcept>
@@ -258,5 +259,25 @@ int main() {
     cerr << e.what() << endl;
     return -1;
   }
+
+  //--------------- Test Code word
+  // Test 23: BIW1 - Test Codeword
+  BIW1 biw1(10, 2, 60, 1, 6);
+  if ((biw1.getCodeword() & 0x1FFFF0) != 0x19F2A0) {
+    cerr << "Test 23: BIW1 Invalid Codeword" << endl;
+  } else {
+    cout << "Test 23: Test passed" << endl;
+  }
+
+  
+  // Test 24: BIW1 - Test Codeword CRC
+  BIW1 biw1a(0, 0, 2, 0, 0);
+  if (biw1a.getCodeword() != 0x19400807) {
+    cerr << "Test 24: BIW1 Invalid Codeword" << endl;
+  } else {
+    cout << "Test 24: Test passed" << endl;
+  }
+
+  
 
 }
