@@ -278,6 +278,116 @@ int main() {
     cout << "Test 24: Test passed" << endl;
   }
 
+  // Test 25 : BIW2 - Test Codeword
+  BIW2 biw2(0x1ff, 1);
+  if ((biw2.getCodeword() & 0x01ffff0) != 0x1ff080) {
+    cerr << "Test 25: BIW2 Invalid Codeword" << endl;
+  } else {
+    cout << "Test 25: Test passed" << endl;
+  }
+
+  // Test 26: BIW3 - Test Codeword
+  BIW3 biw3(31, 12, 1999);
+  if ((biw3.getCodeword() & 0x01ffff0) != 0x19F290) {
+    cerr << "Test 26: BIW3 Invalid Codeword" << endl;
+  } else {
+    cout << "Test 26: Test passed" << endl;
+  }
+
+  // Test 27: BIW3 - Invalid Day
+  try {
+    BIW3 biw3a(32, 12, 1999);
+    cerr << "Test 27: Invalid Date exception should be thrown" << endl;
+  } catch (std::invalid_argument& e) {
+    cout << "Test 27: Passed" << endl;
+  }
+
+  // Test 28: BIW3 - Invalid Month
+  try {
+    BIW3 biw3a(31, 13, 1999);
+    cerr << "Test 28: Invalid Date exception should be thrown" << endl;
+  } catch (std::invalid_argument& e) {
+    cout << "Test 28: Passed" << endl;
+  }
+
+  // Test 29: BIW3 - Invalid Day 0
+  try {
+    BIW3 biw3a(0, 12, 1999);
+    cerr << "Test 29: Invalid Date exception should be thrown" << endl;
+  } catch (std::invalid_argument& e) {
+    cout << "Test 29: Passed" << endl;
+  }
   
+  // Test 30: BIW3 - Invalid Month 0
+  try {
+    BIW3 biw3a(31, 0, 1999);
+    cerr << "Test 30: Invalid Date exception should be thrown" << endl;
+  } catch (std::invalid_argument& e) {
+    cout << "Test 30: Passed" << endl;
+  }
+
+  // Test 31: BIW3 - Invalid Year low
+  try {
+    BIW3 biw3a(1, 1, 1993);
+    cerr << "Test 31: Invalid Date exception should be thrown" << endl;
+  } catch (std::invalid_argument& e) {
+    cout << "Test 31: Passed" << endl;
+  }
+
+  // Test 32: BIW3 - Invalid Year high
+  try {
+    BIW3 biw3a(1, 1, 2026);
+    cerr << "Test 32: Invalid Date exception should be thrown" << endl;
+  } catch (std::invalid_argument& e) {
+    cout << "Test 32: Passed" << endl;
+  }
+
+  // Test 33: BIW4 - Test Codeword
+  BIW4 biw4(23, 59, 59);
+  if ((biw4.getCodeword() & 0x01ffff0) != 0x1fbba0) {
+    cerr << "Test 33: BIW4 Invalid Codeword" << endl;
+  } else {
+    cout << "Test 33: Test passed" << endl;
+  }
+
+  // Test 34: BIW4 - Test Codeword 2
+  BIW4 biw4a(23, 59, 31);
+  if ((biw4a.getCodeword() & 0x01ffff0) != 0x13bba0) {
+    cerr << "Test 34: BIW4 Invalid Codeword" << endl;
+  } else {
+    cout << "Test 34: Test passed" << endl;
+  }
+
+  // Test 35: BIW4 - Test Codeword 3
+  BIW4 biw4b(0, 0, 0);
+  if ((biw4b.getCodeword() & 0x01ffff0) != 0x000020) {
+    cerr << "Test 35: BIW4 Invalid Codeword" << endl;
+  } else {
+    cout << "Test 35: Test passed" << endl;
+  }
+
+  // Test 36: BIW4 - Invalid Hour
+  try {
+    BIW4 biw4c(24, 59, 59);
+    cerr << "Test 36: Invalid Time exception should be thrown" << endl;
+  } catch (std::invalid_argument& e) {
+    cout << "Test 36: Passed" << endl;
+  }
+
+  // Test 37: BIW4 - Invalid Minute
+  try {
+    BIW4 biw4c(23, 60, 59);
+    cerr << "Test 37: Invalid Time exception should be thrown" << endl;
+  } catch (std::invalid_argument& e) {
+    cout << "Test 37: Passed" << endl;
+  }
+
+  // Test 38: BIW4 - Invalid Second
+  try {
+    BIW4 biw4c(23, 59, 60);
+    cerr << "Test 38: Invalid Time exception should be thrown" << endl;
+  } catch (std::invalid_argument& e) {
+    cout << "Test 38: Passed" << endl;
+  }
 
 }
