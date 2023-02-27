@@ -12,16 +12,16 @@
 
 const uint32_t SHORT_ADDRESS_CAPCODE_OFFSET = 0x8000;
 
-class AddressShort {
+class AddressShort  {
 private:
   uint32_t capCode;
 
 public:
   AddressShort(uint32_t capCode);
-  uint32_t getCodeword();
+   uint32_t getCodeword();
 };
   
-class BIW1 {
+class BIW1  {
 private:
   uint32_t priorityAddress;
   uint32_t endOfBlock;
@@ -111,4 +111,14 @@ public:
   uint32_t getCodeword();
 };
 
+class MessageAlphaSignature {
+private:
+  uint32_t signature;
+  string message;
+
+public:
+  MessageAlphaSignature(uint32_t signature, string message);
+  uint32_t getCodeword();
+};
+  
 #endif
