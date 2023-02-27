@@ -5,8 +5,10 @@ CPPFLAGS=-g
 LDFLAGS=-g
 LDLIBS=
 
-SRCS=helper.cpp main.cpp message.cpp codewords/biw1.cpp codewords/biw2.cpp codewords/biw3.cpp codewords/biw4.cpp \
-	codewords/fiw.cpp test.cpp
+SRCS=helper.cpp main.cpp message.cpp codewords/addressShort.cpp codewords/biw1.cpp \
+	codewords/biw2.cpp codewords/biw3.cpp codewords/biw4.cpp codewords/fiw.cpp \
+	codewords/messageAlphaContents.cpp codewords/messageAlphaHeader.cpp \
+	test.cpp
 OBJS=$(subst .cpp,.o,$(SRCS))
 
 all: test
