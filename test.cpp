@@ -7,8 +7,7 @@
 
 #include "flex.hh"
 #include "message.hh"
-#include "fiw.hh"
-#include "codewords.hh"
+#include "codewords/codewords.hh"
 
 #include <iostream>
 #include <stdexcept>
@@ -388,6 +387,46 @@ int main() {
     cerr << "Test 38: Invalid Time exception should be thrown" << endl;
   } catch (std::invalid_argument& e) {
     cout << "Test 38: Passed" << endl;
+  }
+
+  // Test 39: Message Alpha Content
+  MessageAlphaContent mac1("B#\x05");
+  if ((mac1.getCodeword() & 0x01fffff) != 0x151c2) {
+    cerr << "Test 39: Message Alpha Content Invalid Codeword" << endl;
+  } else {
+    cout << "Test 39: Test passed" << endl;
+  }
+
+  // Test 40: Message Alpha Content - Too few chars
+  try {
+    MessageAlphaContent mac2("B#");
+    cerr << "Test 40: Invalid Length exception should be thrown" << endl;
+  } catch (std::invalid_argument& e) {
+    cout << "Test 40: Passed" << endl;
+  }
+
+  // Test 41: Message Alpha Content - Too many chars
+  try {
+    MessageAlphaContent mac2("B#\x05\x10");
+    cerr << "Test 41: Invalid Length exception should be thrown" << endl;
+  } catch (std::invalid_argument& e) {
+    cout << "Test 41: Passed" << endl;
+  }
+
+  // Test 42 : Message Alpha Header
+  MessageAlphaHeader mah1(0, 3, 63, 1, 0);
+  if ((mah1.getCodeword() & 0x1FFA00) != 0x0FF800) {
+    cerr << "Test 42: Message Alpha Header Invalid Codeword" << endl;
+  } else {
+    cout << "Test 42: Test passed" << endl;
+  }
+
+  // Test 43 : Message Alpha Header
+  MessageAlphaHeader mah2(0, 3, 23, 0, 0);
+  if ((mah2.getCodeword() & 0x1FFA00) != 0x2F800) {
+    cerr << "Test 43: Message Alpha Header Invalid Codeword" << endl;
+  } else {
+    cout << "Test 43: Test passed" << endl;
   }
 
 }
