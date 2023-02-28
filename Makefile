@@ -1,14 +1,16 @@
 CC=gcc
 CXX=g++
 RM=rm -f
-CPPFLAGS=-g
+CPPFLAGS=-g -std=c++11
 LDFLAGS=-g
 LDLIBS=
 
-SRCS=helper.cpp main.cpp message.cpp codewords/biw1.cpp \
+SRCS=helper.cpp main.cpp message.cpp codewords/addressShort.cpp codewords/biw1.cpp \
 	codewords/biw2.cpp codewords/biw3.cpp codewords/biw4.cpp codewords/fiw.cpp \
 	codewords/messageAlphaContents.cpp codewords/messageAlphaHeader.cpp \
-	codewords/messageAlphaSignature.cpp test.cpp
+	codewords/messageAlphaSignature.cpp codewords/vectorAlpha.cpp \
+	codewords/messageAlpha.cpp \
+	test.cpp
 OBJS=$(subst .cpp,.o,$(SRCS))
 
 all: test

@@ -76,7 +76,6 @@ private:
   bool checkSecond(uint32_t second);
 };
 
-
 class FrameInformationWord {
 private:
   uint32_t cycleNumber;
@@ -88,7 +87,7 @@ public:
   FrameInformationWord(uint32_t cycleNumber, uint32_t frameNumber, uint32_t repeatPaging, uint32_t lowTrafficFlags); 
   uint32_t getCodeword();
 };
-
+  
 class MessageAlphaContent {
 private:
   string message;
@@ -121,6 +120,23 @@ public:
   uint32_t getCodeword();
 };
 
+class MessageAlpha {
+private:
+  MessageAlphaHeader* messageAlphaHeader;
+  MessageAlphaSignature* messageAlphaSignature;
+  vector<MessageAlphaContent>* messageAlphaContent;
+
+public:
+  MessageAlpha(uint32_t messageNumber, string message);
+  vector<uint32_t> getCodewords();
+
+private:
+  void fillUpChars(string *message);
+  uint32_t calculateSignature(string message);
+  uint32_t calculateFragmentCheck(vector<uint32_t> codewords);
+  uint32_t getBitgroupSum(uint32_t codeword);
+};
+
 class VectorAlpha {
 private:
   uint32_t messageStart;
@@ -128,7 +144,8 @@ private:
 
 public:
   VectorAlpha(uint32_t messageStart, uint32_t messageWords);
-  uint32_t getCodewords();
+  uint32_t getCodeword();
 };
+
 
 #endif
