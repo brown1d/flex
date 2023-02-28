@@ -503,11 +503,25 @@ int main() {
   } else {
     cout << "Test 48f: Passed" << endl;
   }
-  
-  //  assert_eq!(msg_alpha.get_codewords()[0] & 0x1FFA00, 0x02F800);
-  //      assert_eq!(msg_alpha.get_codewords()[0] & 0x3FF, 0x14F);
-  //      assert_eq!(msg_alpha.get_codewords()[1] & 0x1FFF80, 0x1D6380); // Gu
-  //      assert_eq!(msg_alpha.get_codewords()[2] & 0x1FFFFF, 0x1975F2); // rke
-  //      assert_eq!(msg_alpha.get_codewords()[3] & 0x1FFFFF, 0x1879EE); // nsa
-  //      assert_eq!(msg_alpha.get_codewords()[4] & 0x1FFFFF, 0x1D30EC); // lat
+
+  // Test 49: Calculate Message Alpha Signature 1
+  MessageAlpha msgAlphaa(23, "Gurken");
+  vector<uint32_t> codewordsVectora = msgAlphaa.getCodewords();
+  uint32_t* codewordsa = codewordsVectora.data();
+  if ((codewordsa[1] & 0x1FFF80) != 0x1D6380) {
+    cerr << "Test 49a: Code word for first byte invalid" << codewordsa[1] << endl;
+  } else {
+    cout << "Test 49a: Passed" << endl;
+  }
+  if ((codewordsa[2] & 0x1FFFFF) != 0x1975F2) {
+    cerr << "Test 49a: Code word for first byte invalid" << codewordsa[2] << endl;
+  } else {
+    cout << "Test 49a: Passed" << endl;
+  }
+  if ((codewordsa[3] & 0x1FFFFF) != 0x00c1ee) {
+    cerr << "Test 49a: Code word for first byte invalid" << codewordsa[3] << endl;
+  } else {
+    cout << "Test 49a: Passed" << endl;
+  }
+
 }
