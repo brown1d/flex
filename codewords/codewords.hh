@@ -120,5 +120,15 @@ public:
   MessageAlphaSignature(uint32_t signature, string message);
   uint32_t getCodeword();
 };
-  
+
+class VectorAlpha {
+private:
+  uint32_t messageStart;
+  uint32_t messageWords;
+
+public:
+  VectorAlpha(uint32_t messageStart, uint32_t messageWords);
+  uint32_t getCodewords();
+};
+
 #endif
