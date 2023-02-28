@@ -16,13 +16,13 @@ MessageAlpha::MessageAlpha(uint32_t messageNumber, string message) {
   string messageFilled = message;
   fillUpChars(&messageFilled);
   this->messageAlphaSignature = new MessageAlphaSignature(calculateSignature(message),
-							  messageFilled.substr(0, 3));
-
+							  messageFilled.substr(0, 2));
+  
   this->messageAlphaContent = new vector<MessageAlphaContent>();
   for (int i = 0; i < (messageFilled.length() - 2) / 3; i++) {
     this->messageAlphaContent->push_back(MessageAlphaContent(messageFilled.substr(2+i * 3, 3)));
   }
-						      
+
 }
 
 // Pad the String

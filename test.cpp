@@ -172,7 +172,7 @@ int main() {
   } else {
     cerr << "Test 15: Failed, partiy is true " << result << endl;
   }
-  if (testData == testData) {
+  if (testData == 0x3) {
     cout << "Test 15: Passed, test data is " << testData << endl;
   } else {
     cerr << "Test 15: Failed, test data is " << testData << endl;
@@ -430,8 +430,8 @@ int main() {
   }
 
   // Test 44: Message Alpha Signature
-  MessageAlphaSignature mas1(0x7f, "B\x23");
-  if ((mas1.getCodeword() & 0x01fffff) != 0x8E17F) {
+  MessageAlphaSignature mas(0x7f, "B\x23");
+  if ((mas.getCodeword() & 0x01fffff) != 0x8E17F) {
     cerr << "Test 44: Message Alpha Signature Invalid Codeword" << endl;
   } else {
     cout << "Test 44: Test passed" << endl;
@@ -468,5 +468,46 @@ int main() {
   } catch (std::invalid_argument& e) {
     cout << "Test 47: Passed" << endl;
   }
+
+  // Test 48: Calculate Message Alpha Signature 1
+  MessageAlpha msgAlpha(23, "Gurkensalat");
+  vector<uint32_t> codewordsVector = msgAlpha.getCodewords();
+  uint32_t* codewords = codewordsVector.data();
+  if ((codewords[0] & 0x1FFA00) != 0x02f800) {
+    cerr << "Test 48a: Code word for first byte invalid" << codewords[0] << endl;
+  } else {
+    cout << "Test 48a: Passed" << endl;
+  }
+  if ((codewords[0] & 0x3FF) != 0x14f) {
+    cerr << "Test 48b: Code word for first byte invalid" << codewords[0] << endl;
+  } else {
+    cout << "Test 48b: Passed" << endl;
+  }
+  if ((codewords[1] & 0x1FFF80) != 0x1D6380) {
+    cerr << "Test 48c: Code word for first byte invalid" << codewords[1] << endl;
+  } else {
+    cout << "Test 48c: Passed" << endl;
+  }
+  if ((codewords[2] & 0x1FFFFF) != 0x1975F2) {
+    cerr << "Test 48d: Code word for first byte invalid" << codewords[2] << endl;
+  } else {
+    cout << "Test 48d: Passed" << endl;
+  }
+  if ((codewords[3] & 0x1FFFFF) != 0x1879EE) {
+    cerr << "Test 48e: Code word for first byte invalid" << codewords[3] << endl;
+  } else {
+    cout << "Test 48e: Passed" << endl;
+  }
+  if ((codewords[4] & 0x1FFFFF) != 0x1D30EC) {
+    cerr << "Test 48f: Code word for first byte invalid" << codewords[4] << endl;
+  } else {
+    cout << "Test 48f: Passed" << endl;
+  }
   
+  //  assert_eq!(msg_alpha.get_codewords()[0] & 0x1FFA00, 0x02F800);
+  //      assert_eq!(msg_alpha.get_codewords()[0] & 0x3FF, 0x14F);
+  //      assert_eq!(msg_alpha.get_codewords()[1] & 0x1FFF80, 0x1D6380); // Gu
+  //      assert_eq!(msg_alpha.get_codewords()[2] & 0x1FFFFF, 0x1975F2); // rke
+  //      assert_eq!(msg_alpha.get_codewords()[3] & 0x1FFFFF, 0x1879EE); // nsa
+  //      assert_eq!(msg_alpha.get_codewords()[4] & 0x1FFFFF, 0x1D30EC); // lat
 }
