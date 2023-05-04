@@ -83,7 +83,7 @@ vector<uint8_t> Frame::getBytes() {
 }
 
 uint32_t Frame::addMessage(Message message) {
-  uint32_t sizeNewMsg = message.getNumberOfContentCodewords();
+  uint32_t sizeNewMsg = message.getNumberOfMessageCodewords();
 
   if (sizeNewMsg < spaceLeft()) {
     this->messages.push_back(message);
