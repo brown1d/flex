@@ -27,13 +27,11 @@ vector<uint8_t> Blocks::getBytes(vector<Message> messages, bool sendTime) {
 
   vector<uint8_t> bytes;
   for (uint32_t i = 0; i < 11; i++) {
-    auto begin = cws[i*8];
-    auto end = cws[(i+1)*8];
-    vector<uint32_t> slice(begin, end);
+    vector<uint32_t> slice = vector<uint32_t>(cws.begin() + (i* 8), cws.begin() + ((i + 1) * 8));
     vector<uint8_t> interleaved = interleaveCodewords1600(slice);
     bytes.insert(bytes.end(),  interleaved.begin(), interleaved.end()); 
   }
-  
+
   return bytes;
 }
   
