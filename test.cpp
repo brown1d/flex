@@ -8,12 +8,20 @@
 #include "flex.hh"
 #include "message.hh"
 #include "blocks.hh"
+#include "frame.hh"
 #include "codewords/codewords.hh"
 
 #include <iostream>
 #include <stdexcept>
 
 using namespace std;
+
+void printFrame(vector<uint8_t> vec) {
+  for (auto it = vec.begin(); it < vec.end(); it++) {
+    printf("%x", *it);
+  }
+  printf("\n");
+}
 
 int main() {
   // Test1: Test Message
@@ -60,11 +68,12 @@ int main() {
 
   // Test5: Test message get number of content codewords when four characters
   try {
-    Message message(0, MessageType::AlphaNum, 0x8001, "abcd");
-    if (message.getNumberOfMessageCodewords() != 5) {
+    Message message(0, MessageType::AlphaNum, 0x8001, "test");
+    cout << "Test 5 # of control words" << message.getNumberOfContentCodewords() << endl;
+    if (message.getNumberOfContentCodewords() != 3) {
       cerr << "Test5: Invalid number of Codewords " << message.getNumberOfContentCodewords() << endl;
     } else {
-      cout << "Test 5 Passed"<< endl;
+      cout << "Test 5 Passed" << message.getNumberOfContentCodewords() << endl;
     }
   }  catch (std::invalid_argument& e) {
     cerr << e.what() << endl;
@@ -642,4 +651,98 @@ int main() {
   } else {
     cout << "Test 57: Interleave of all As correct" << endl;
   }
+
+  // Message Tests
+  // Test 58: Add Message
+  Frame frame1 = Frame(0, 1);
+  uint32_t message1Size = frame1.addMessage(Message(0, MessageType::AlphaNum, 0x8001, "test"));
+  if (message1Size != 6) {
+    cerr << "Test 58: Message is incorrect size" << message1Size << endl;
+  } else {
+    cout << "Test 58: Message is correct size" << endl;
+  }
+
+  // Test 59: Add Message 86
+  Frame frame2 = Frame(0, 1);
+  Message testMessage = Message(0, MessageType::AlphaNum, 0x8001, "test");
+  for (int i = 0; i < 16; i++) {
+    frame2.addMessage(testMessage);
+  }
+  if (frame2.addMessage(testMessage) != 86) {
+    cerr << "Test 59: Message is incorrect size" << endl;
+  } else {
+    cout << "Test 59: Message is correct size" << endl;
+  }
+
+  // Test 60: Add Message 91
+  try {
+    Frame frame3 = Frame(0, 1);
+    for (int i = 0; i < 17; i++) {
+      frame3.addMessage(testMessage);
+    }
+    frame3.addMessage(testMessage);
+    cerr << "Test 60: Exception error could not add message should be thrown" << endl;
+  } catch(std::invalid_argument& e) {
+    cout << "Test 60: Test passed" << endl;
+  }
+
+  // Test 61: Get Header
+  Frame frame4 = Frame(3, 107);
+  if (frame4.getHeader() != vector<uint8_t>{0x55, 0x55, 0x55, 0x55, 0x1E, 0xCF, 0x9A, 0x9C, // sync1
+                   0xAA, 0xAA, 0xE1, 0x30, 0x65, 0x63,
+                   0x3B, 0x6B, 0xA0, 0xE4,                          // FIW
+                   0x75, 0x1B, 0xA2, 0x48, 0xDE}) {
+    cerr << "Test 61: Header does not match" << endl;
+  } else {
+    cout << "Test 61: Test passed" << endl;
+  }
+
+  // Test 62: Get Sync 1
+  if (Frame::getSync1() != vector<uint8_t>{0x55, 0x55, 0x55, 0x55, 0x1E, 0xCF, 0x9A, 0x9C, 
+                   0xAA, 0xAA, 0xE1, 0x30, 0x65, 0x63}) {
+    cerr << "Test 62: Sync 1 does not match" << endl;
+  } else {
+    cout << "Test 62: Test passed" << endl;
+  }
+
+  // Test 63: Get Sync 2
+  if (Frame::getSync2() != vector<uint8_t>{0x75, 0x1B, 0xA2, 0x48, 0xDE}) {
+    cerr << "Test 63: Sync 2 does not match" << endl;
+  } else {
+    cout << "Test 63: Test passed" << endl;
+  }
+
+  // Test 64: u8From32
+  uint8_t u8from32Test[4] = { 0, 0, 0, 0 };
+  Frame::u8from32(0x12345678, u8from32Test);
+  if (u8from32Test[0] != 0x78 && u8from32Test[1] != 0x56 && u8from32Test[2] != 0x34 && u8from32Test[3] != 0x12) {
+    cerr << "Test 64: U8From32 does not match" << endl;
+  } else {
+    cout << "Test 64: Test passed" << endl;
+  }
+
+  // Test 65: u8From16
+  uint8_t u8from16Test[2] = { 0, 0 };
+  Frame::u8from16(0x1234, u8from16Test);
+  if (u8from16Test[0] != 0x34 && u8from16Test[1] != 0x12) {
+    cerr << "Test 65: U8From16 does not match" << endl;
+  } else {
+    cout << "Test 65: Test passed" << endl;
+  }
+  
+  // Test 66: Clcaulte Cycle and frame lowest
+  if (Frame::calculateCycleAndFrame(0, 0) != tuple<uint32_t, uint32_t>(0, 0)) {
+    cerr << "Test 66: Calculate Cycle does not match" << endl;
+  } else {
+    cout << "Test 66: Test passed" << endl;
+  }
+
+  // Test 67: Clcaulte Cycle and frame lowest
+  if (Frame::calculateCycleAndFrame(59, 59) != tuple<uint32_t, uint32_t>(14, 127)) {
+    cerr << "Test 67: Calculate Cycle does not match" << endl;
+  } else {
+    cout << "Test 67: Test passed" << endl;
+  }
+
+
 }
