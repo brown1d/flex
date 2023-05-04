@@ -7,6 +7,7 @@
 
 #include "flex.hh"
 #include "message.hh"
+#include "blocks.hh"
 #include "codewords/codewords.hh"
 
 #include <iostream>
@@ -524,4 +525,121 @@ int main() {
     cout << "Test 49a: Passed" << endl;
   }
 
+  // Test 50: Blocks - Get BIW CWS No time
+  vector<uint32_t> cws1 = Blocks::getBiwCws(1, false);
+  if (cws1.size() != 1) {
+    cerr << "Test 50: CWS is wrong size" << endl;
+  } else {
+    cout << "Test 50 CWS is correct size" << endl;
+  }
+  if ((cws1[0] & 0x1ffff0) == 0x000800) {
+    cout << "Test 50: CWS is correct value" << endl;
+  } else {
+    cerr << "Test 50: CWS is incorrect value" << endl;
+  }
+
+  // Test 51: Blocks - Get BIW CWS Sednd time
+  vector<uint32_t> cws2 = Blocks::getBiwCws(1, true);
+  if (cws2.size() != 4) {
+    cerr << "Test 51: CWS is wrong size" << endl;
+  } else {
+    cout << "Test 51 CWS is correct size" << endl;
+  }
+  if ((cws2[0] & 0x1FFFF0) == 0x001700) {
+    cout << "Test 51: CWS is correct value" << endl;
+  } else {
+    cerr << "Test 51: CWS is incorrect value" << (cws2[0] & 0x1FFFF0) << endl;
+  }
+
+  // Test 52: Get Vector and Content CWS
+  Message msg = Message(0, MessageType::AlphaNum, 0x0001, "test");
+  vector<Message> msgs;
+  msgs.push_back(msg);
+  VectorAndContentCws vectorAndContentCws = Blocks::getVectorAndContentCws(msgs, 1, msgs.size());
+  if (vectorAndContentCws.vectorCws.size() != 1) {
+    cerr << "Test 52: Vector CWS is wrong size" << endl;
+  } else {
+    cout << "Test 52: Vector CWS is correct size" << endl;
+  }
+  if ((vectorAndContentCws.vectorCws[0] & 0x1FFFF0) != 0x00c1d0) {
+    cerr << "Test 52: Vector CWS is has wrong value" << endl;
+  } else {
+    cout << "Test 52: Vector CWS is correct value" << endl;
+  }
+  if (vectorAndContentCws.contentCws.size() != 3) {
+    cerr << "Test 52: Content CWS is wrong size" << endl;
+  } else {
+    cout << "Test 52: Content CWS is correct size" << endl;
+  }
+
+  // Test 53: fill up block 1600
+  if (Blocks::fillUpBlock1600(vector<uint32_t>(1, 0)).size() != 88) {
+    cerr << "Test 53: Incorrect size from fill up block 1600" << endl;
+  } else {
+    cout << "Test 53: Correct size from fill up block 1600" << endl;
+  }
+
+  // Test 54: interleave all 0
+  if (Blocks::interleaveCodewords1600(vector<uint32_t>(8, 0)) != vector<uint8_t>(32, 0)) {
+    cerr << "Test 54: Interleave of all zero failed" << endl;
+  } else {
+    cout << "Test 54: Interleave of all zero correct" << endl;
+  }
+
+  // Test 55: interleave all 1
+  if (Blocks::interleaveCodewords1600(vector<uint32_t>(8, UINT32_MAX)) != vector<uint8_t>(32, UINT8_MAX)) {
+    cerr << "Test 55: Interleave of all ones failed" << endl;
+  } else {
+    cout << "Test 55: Interleave of all ones correct" << endl;
+  }
+
+  // Test 56: Single 1
+  vector<uint32_t> interleave{0x200, 0, 0, 0, 0, 0, 0, 0};
+  vector<uint8_t> interleaveResult(32, 0);
+  interleaveResult[9] = 0x01;
+  if (interleaveResult != Blocks::interleaveCodewords1600(interleave)) {
+    cerr << "Test 56: Interleave of single one failed" << endl;
+  } else {
+    cout << "Test 56: Interleave of single one correct" << endl;
+  }
+ 
+   // Test 57: All As
+  vector<uint32_t> interleave2(8, 0xaaaaaaaa);
+  vector<uint8_t> interleaveResult2{0x00,
+                0xff,
+                0x00,
+                0xff,
+                0x00,
+                0xff,
+                0x00,
+                0xff,
+                0x00,
+                0xff,
+                0x00,
+                0xff,
+                0x00,
+                0xff,
+                0x00,
+                0xff,
+                0x00,
+                0xff,
+                0x00,
+                0xff,
+                0x00,
+                0xff,
+                0x00,
+                0xff,
+                0x00,
+                0xff,
+                0x00,
+                0xff,
+                0x00,
+                0xff,
+                0x00,
+                0xff};
+  if (interleaveResult2 != Blocks::interleaveCodewords1600(interleave2)) {
+    cerr << "Test 57: Interleave of all As failed" << endl;
+  } else {
+    cout << "Test 57: Interleave of all As correct" << endl;
+  }
 }

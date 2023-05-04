@@ -19,7 +19,6 @@ struct VectorAndContentCws {
 class Blocks {
 public:
   static vector<uint8_t> getBytes(vector<Message> messages, bool sendTime);
-private:
   static uint32_t countAddressCws(vector<Message> messages);
   static vector<uint32_t> getBiwCws(uint32_t amountAddresses, bool sendTime);
   static vector<uint32_t> getAddressCws(vector<Message> messages);
