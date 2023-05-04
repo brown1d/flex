@@ -17,7 +17,7 @@ vector<uint8_t> Blocks::getBytes(vector<Message> messages, bool sendTime) {
   vector<uint32_t> biwCws = getBiwCws(amountAddressCws, sendTime);
   vector<uint32_t> addressCws = getAddressCws(messages);
   VectorAndContentCws vectorAndContent = getVectorAndContentCws(messages, biwCws.size(), addressCws.size());
-  
+
   vector<uint32_t> cws;
   cws.insert(cws.end(), biwCws.begin(), biwCws.end());
   cws.insert(cws.end(), addressCws.begin(), addressCws.end());
@@ -27,7 +27,7 @@ vector<uint8_t> Blocks::getBytes(vector<Message> messages, bool sendTime) {
 
   vector<uint8_t> bytes;
   for (uint32_t i = 0; i < 11; i++) {
-    vector<uint32_t> slice = vector<uint32_t>(cws.begin() + (i* 8), cws.begin() + ((i + 1) * 8));
+    vector<uint32_t> slice = vector<uint32_t>(cws.begin() + (i * 8), cws.begin() + ((i + 1) * 8));
     vector<uint8_t> interleaved = interleaveCodewords1600(slice);
     bytes.insert(bytes.end(),  interleaved.begin(), interleaved.end()); 
   }
@@ -94,17 +94,15 @@ VectorAndContentCws Blocks::getVectorAndContentCws(vector<Message> messages, uin
 }
  
 vector<uint32_t> Blocks::fillUpBlock1600(vector<uint32_t> cws) {
-   vector<uint32_t> filledCws;
-
-  while (filledCws.size() < 88) {
-    if (filledCws.size() % 2 == 0) {
-      filledCws.push_back(0xffffffff);
+  while (cws.size() < 88) {
+    if (cws.size() % 2 == 0) {
+      cws.push_back(0xffffffff);
     } else {
-      filledCws.push_back(0x0);
+      cws.push_back(0x0);
     }
   }
 
-  return filledCws;
+  return cws;
 }
 
 vector<uint8_t> Blocks::interleaveCodewords1600(vector<uint32_t> input) {
@@ -116,7 +114,7 @@ vector<uint8_t> Blocks::interleaveCodewords1600(vector<uint32_t> input) {
   for (uint8_t bitIndex = 0; bitIndex < 32; bitIndex++) {
     for (uint8_t codeword = 0; codeword < 8; codeword++) {
       uint32_t inputMask = 1 << bitIndex;
-      uint32_t maskedInput = input[codeword] & inputMask;
+      uint32_t maskedInput = input.at(codeword) & inputMask;
       uint32_t backshiftedInput = (maskedInput >> bitIndex) & 0x00000001;
       uint8_t readBit = (uint8_t) backshiftedInput;
       uint8_t bitToWrite = readBit << codeword;
