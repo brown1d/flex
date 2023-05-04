@@ -60,6 +60,14 @@ vector<uint8_t> Frame::getSync2() {
 
 vector<uint8_t> Frame::getHeader() {
   vector<uint8_t> header;
+  vector<uint8_t> sync1 = getSync1();
+  vector<uint8_t> sync2 = getSync2();
+  uint8_t codeword[4] = {0, 0, 0, 0};
+  u8from32(this->fiw.getCodeword(), codeword);
+
+  header.insert(header.end(), sync1.begin(), sync1.end());
+  header.insert(header.end(), codeword[0], codeword[3]);
+  header.insert(header.end(), sync2.begin(), sync2.end());
   return header;
 }
 
@@ -96,14 +104,14 @@ tuple<uint32_t, uint32_t> Frame::calculateCycleAndFrame(uint32_t minutes, uint32
   return make_tuple(cycle, frame);
 }
 
-void u8from32 (uint32_t u32, uint8_t* u8) {
+void Frame::u8from32 (uint32_t u32, uint8_t* u8) {
   u8[3] = (uint8_t) u32;
   u8[2] = (uint8_t)(u32>>=8);
   u8[1] = (uint8_t)(u32>>=8);
   u8[0] = (uint8_t)(u32>>=8);
 }
 
-void u8from16 (uint16_t u16, uint8_t* u8) {
+void Frame::u8from16 (uint16_t u16, uint8_t* u8) {
   u8[1] = (uint8_t)(u16>>=8);
   u8[0] = (uint8_t)(u16>>=8);
 }

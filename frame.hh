@@ -6,6 +6,7 @@
  */
 
 #include "message.hh"
+#include "codewords/codewords.hh"
 
 #ifndef FRAME_H
 #define FRAME_H
@@ -29,15 +30,15 @@ public:
   Frame(uint32_t cycleNumber, uint32_t frameNumber);
   uint32_t addMessage(Message message);
   uint32_t spaceLeft();
-  tuple<uint32_t, uint32_t> calculateCycleAndFrame(uint32_t minutes, uint32_t seconds);
+  vector<uint8_t> getBytes();
+  tuple<uint32_t, uint32_t> static calculateCycleAndFrame(uint32_t minutes, uint32_t seconds);
   vector<uint8_t> getSync1();
   vector<uint8_t> getSync2();
 
 private:
   vector<uint8_t> getHeader();
-  vector<uint8_t> getBytes();
   void u8from32 (uint32_t u32, uint8_t* u8);
-  void u8from16 (uint32_t u32, uint8_t* u8);
+  void u8from16 (uint16_t u32, uint8_t* u8);
 };
   
 #endif
