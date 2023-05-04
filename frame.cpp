@@ -31,13 +31,13 @@ vector<uint8_t> Frame::getSync1() {
   uint8_t patternB[2] = { 0, 0};
   
   u8from32(PATTERN_BS1, patternBS1);
-  sync1.insert(sync1.end(), &patternBS1[0], &patternBS1[3]);
+  sync1.insert(sync1.end(), &patternBS1[0], &patternBS1[4]);
   u8from32(PATTERN_A1, patternA1);
-  sync1.insert(sync1.end(), &patternA1[0], &patternA1[3]);
+  sync1.insert(sync1.end(), &patternA1[0], &patternA1[4]);
   u8from16(PATTERN_B, patternB);
-  sync1.insert(sync1.end(), &patternB[0], &patternB[1]);
+  sync1.insert(sync1.end(), &patternB[0], &patternB[2]);
   u8from32(PATTERN_A1 ^ 0xFFFFFFFF, patternA1);
-  sync1.insert(sync1.end(), &patternA1[0], &patternA1[3]);
+  sync1.insert(sync1.end(), &patternA1[0], &patternA1[4]);
 
   return sync1;
 }
@@ -48,12 +48,12 @@ vector<uint8_t> Frame::getSync2() {
   uint8_t u8tmp[4] = { 0, 0, 0, 0};
 
   tmp |= PATTERN_BS2 & 0X0f;
-  tmp |= PATTERN_C << 4;
-  tmp |= ((PATTERN_BS2 ^ 0x0f) & 0x0f) << 20;
-  tmp |= ((PATTERN_C ^ 0xffff) & 0x0f) << 24;
+  tmp |= (uint32_t)PATTERN_C << 4;
+  tmp |= ((uint32_t)(PATTERN_BS2 ^ 0x0f) & 0x0f) << 20;
+  tmp |= ((uint32_t)(PATTERN_C ^ 0xffff)) << 24;
   u8from32(tmp, u8tmp);
-  sync2.insert(sync2.end(), &u8tmp[0], &u8tmp[3]);
-  sync2.push_back((PATTERN_C ^ 0xffff) >> 8);
+  sync2.insert(sync2.end(), &u8tmp[0], &u8tmp[4]);
+  sync2.push_back((uint8_t)((PATTERN_C ^ 0xffff) >> 8));
   return sync2;
 }
 
@@ -65,7 +65,7 @@ vector<uint8_t> Frame::getHeader() {
   u8from32(this->fiw.getCodeword(), codeword);
 
   header.insert(header.end(), sync1.begin(), sync1.end());
-  header.insert(header.end(), &codeword[0], &codeword[3]);
+  header.insert(header.end(), &codeword[0], &codeword[4]);
   header.insert(header.end(), sync2.begin(), sync2.end());
 
   return header;
@@ -105,14 +105,14 @@ tuple<uint32_t, uint32_t> Frame::calculateCycleAndFrame(uint32_t minutes, uint32
 }
 
 void Frame::u8from32 (uint32_t u32, uint8_t* u8) {
-  u8[3] = (uint8_t) u32;
-  u8[2] = (uint8_t)(u32>>=8);
+  u8[0] = (uint8_t) u32;
   u8[1] = (uint8_t)(u32>>=8);
-  u8[0] = (uint8_t)(u32>>=8);
+  u8[2] = (uint8_t)(u32>>=8);
+  u8[3] = (uint8_t)(u32>>=8);
 }
 
 void Frame::u8from16 (uint16_t u16, uint8_t* u8) {
-  u8[1] = (uint8_t)(u16>>=8);
-  u8[0] = (uint8_t)(u16>>=8);
+  u8[0] = (uint8_t) u16 & 0xff;
+  u8[1] = (uint8_t)(u16 >> 8 & 0xff);
 }
   
