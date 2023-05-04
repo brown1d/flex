@@ -1,3 +1,10 @@
+/**
+ * Author: David Brown <dave@bagpuss.nu>
+ * File:   main.cpp
+ *
+ * Main Class
+ */
+
 #include "flex.hh"
 #include "message.hh"
 #include <iostream>
@@ -13,7 +20,7 @@ int main() {
     cerr << e.what() << endl;
     return -1;
   }
-  
+
   return 0;
 }
 

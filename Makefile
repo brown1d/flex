@@ -9,7 +9,7 @@ SRCS=helper.cpp main.cpp message.cpp codewords/addressShort.cpp codewords/biw1.c
 	codewords/biw2.cpp codewords/biw3.cpp codewords/biw4.cpp codewords/fiw.cpp \
 	codewords/messageAlphaContents.cpp codewords/messageAlphaHeader.cpp \
 	codewords/messageAlphaSignature.cpp codewords/vectorAlpha.cpp \
-	codewords/messageAlpha.cpp \
+	codewords/messageAlpha.cpp blocks.cpp frame.cpp \
 	test.cpp
 OBJS=$(subst .cpp,.o,$(SRCS))
 

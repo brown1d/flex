@@ -52,8 +52,16 @@ uint32_t Message::getNumberOfContentCodewords() {
       size += 1;
     }
     return size;
-  }
-      
+}
+
+uint32_t Message::getCapcode() {
+  return capcode;
+}
+
+string Message::getData() {
+  return data;
+}
+
 CapcodeType Message::getCapcodeType(uint32_t capcode) {
   if (capcode >= 0x0001 && capcode <= 0x1ea7ff) {
     return CapcodeType::ShortAddress;

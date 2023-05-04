@@ -11,8 +11,15 @@ Motorola Flex is a one-way Pager protocol.
 1. Helper
 2. Message
 3. Frame Information Word (fiw)
+4. BIW1/2/3/4
+5. Message Alpha
+
+## Tests to be done
+
+1. Frame
 
 ## To be worked on
 
-1. BIW1/2/3/4
-2. Blocks
+1. Main
+
+FLEX®, is a registered trademark of Motorola®, Incorporated.
