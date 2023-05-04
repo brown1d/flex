@@ -54,7 +54,6 @@ vector<uint8_t> Frame::getSync2() {
   u8from32(tmp, u8tmp);
   sync2.insert(sync2.end(), &u8tmp[0], &u8tmp[3]);
   sync2.push_back((PATTERN_C ^ 0xffff) >> 8);
-
   return sync2;
 }
 
@@ -66,8 +65,9 @@ vector<uint8_t> Frame::getHeader() {
   u8from32(this->fiw.getCodeword(), codeword);
 
   header.insert(header.end(), sync1.begin(), sync1.end());
-  header.insert(header.end(), codeword[0], codeword[3]);
+  header.insert(header.end(), &codeword[0], &codeword[3]);
   header.insert(header.end(), sync2.begin(), sync2.end());
+
   return header;
 }
 

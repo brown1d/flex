@@ -2,6 +2,17 @@
     "files.associations": {
         "tuple": "cpp",
         "vector": "cpp",
-        "array": "cpp"
+        "array": "cpp",
+        "stdexcept": "cpp",
+        "variant": "cpp",
+        "ostream": "cpp",
+        "ios": "cpp",
+        "__bit_reference": "cpp",
+        "__hash_table": "cpp",
+        "__split_buffer": "cpp",
+        "initializer_list": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "unordered_map": "cpp"
     }
 }
