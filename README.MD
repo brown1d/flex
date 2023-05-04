@@ -13,10 +13,9 @@ Motorola Flex is a one-way Pager protocol.
 3. Frame Information Word (fiw)
 4. BIW1/2/3/4
 5. Message Alpha
+6. Frame
 
 ## Tests to be done
-
-1. Frame
 
 ## To be worked on
 

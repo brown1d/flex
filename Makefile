@@ -19,7 +19,7 @@ flex: $(OBJS)
 	$(CXX) $(LDFLAGS) -o flex main.o frame.o blocks.o message.o helper.o codewords/*.o
 
 test: $(OBJS)
-	$(CXX) $(LDFLAGS) -o test test.o message.o helper.o codewords/*.o
+	$(CXX) $(LDFLAGS) -o test test.o message.o frame.o blocks.o helper.o codewords/*.o
 
 clean:
 	$(RM) $(OBJS)
